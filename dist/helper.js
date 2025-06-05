@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const util_1 = require("util");
 class Helper {
     static comparePopulation(oldList, newList) {
-        const joined = newList.filter((ign) => !oldList.includes(ign));
-        const left = oldList.filter((ign) => !newList.includes(ign));
+        const oldSet = new Set(oldList);
+        const newSet = new Set(newList);
+        const joined = newList.filter((ign) => !oldSet.has(ign));
+        const left = oldList.filter((ign) => !newSet.has(ign));
         return { joined, left };
     }
     static cleanOutput(output, json, rawHostname) {
