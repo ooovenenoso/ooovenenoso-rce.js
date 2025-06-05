@@ -1,16 +1,37 @@
 # rce.js
 
-> A library for developers to easily create their own Rust Console Edition integrations such as discord bots using GPORTAL's API & WebSocket!
+TypeScript library for integrating Rust Console Edition servers with external applications through GPORTAL's API and WebSocket.
+
+## Features
+
+- Manage multiple servers simultaneously.
+- Event-driven interface for reacting to console messages and player events.
+- Helper utilities for sending commands and fetching server information.
+- Precompiled JavaScript available in `dist`.
+
+## Requirements
+
+- Node.js **16** or higher.
+- Access to a Rust Console Edition server hosted on GPORTAL.
 
 ## Documentation
 
-For a more in-depth documentation, refer to [GitBook](https://rcejs.gitbook.io/rcejs)! You can also join our support [discord server](https://discord.gg/npYygkeXSa)
+For a more in-depth guide visit [GitBook](https://rcejs.gitbook.io/rcejs). You can also join our support [Discord server](https://discord.gg/npYygkeXSa). The repository provides a [cheatsheet](./cheatsheet.md) that lists formatting options for in-game messages.
 
 ## Installation
 
 ```bash
 npm i b1nzeex/rce.js
 ```
+
+## Building from Source
+
+```bash
+npm install
+npx tsc
+```
+
+The compiled files are generated in the `dist` directory.
 
 ## Example Usage - TypeScript
 
