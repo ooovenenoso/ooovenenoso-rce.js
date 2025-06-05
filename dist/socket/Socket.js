@@ -33,7 +33,7 @@ class GPortalSocket {
         this._socket = null;
         this._manager.logger.debug("WebSocket Connection Closed");
     }
-    connect(resubsctibe = false) {
+    connect(resubscribe = false) {
         this._manager.logger.debug("Connecting to WebSocket Server");
         this._connectionAttempts++;
         this._socket = new ws_1.WebSocket(constants_1.GPortalRoutes.WS, ["graphql-ws"], {
@@ -46,7 +46,7 @@ class GPortalSocket {
         this._socket.on("open", () => {
             this._manager.logger.debug("WebSocket Connection Established");
             this._connectionAttempts = 0;
-            this.authenticate(resubsctibe);
+            this.authenticate(resubscribe);
             this._heartbeatInterval = setInterval(() => {
                 if (this._socket?.OPEN) {
                     this._manager.logger.debug("Sending WebSocket Heartbeat");
@@ -207,7 +207,7 @@ class GPortalSocket {
             this._manager.logger.debug(`[${server.identifier}] WebSocket Subscription Added`);
         }
     }
-    authenticate(resubsctibe) {
+    authenticate(resubscribe) {
         const token = this._auth.accessToken;
         if (!token) {
             throw new Error("No access token available");
@@ -220,7 +220,7 @@ class GPortalSocket {
                     authorization: token,
                 },
             }));
-            if (resubsctibe) {
+            if (resubscribe) {
                 this._manager.servers
                     .getAll()
                     .forEach((server) => this.addServer(server));

@@ -69,8 +69,10 @@ class RCEManager {
     async init(auth, logger) {
         this.logger =
             logger?.instance || new Logger_1.default(logger?.level, logger?.file);
+        const username = auth?.username || process.env.RCE_USERNAME || "";
+        const password = auth?.password || process.env.RCE_PASSWORD || "";
         this._auth = new Auth_1.default(this);
-        await this._auth.login(auth.username, auth.password);
+        await this._auth.login(username, password);
         this._socket = new Socket_1.default(this, this._auth);
         this._socket.connect();
         this.servers = new Servers_1.default(this, this._auth, this._socket);

@@ -40,7 +40,7 @@ export default class GPortalSocket {
     this._manager.logger.debug("WebSocket Connection Closed");
   }
 
-  public connect(resubsctibe: boolean = false) {
+  public connect(resubscribe: boolean = false) {
     this._manager.logger.debug("Connecting to WebSocket Server");
 
     this._connectionAttempts++;
@@ -56,7 +56,7 @@ export default class GPortalSocket {
       this._manager.logger.debug("WebSocket Connection Established");
 
       this._connectionAttempts = 0;
-      this.authenticate(resubsctibe);
+      this.authenticate(resubscribe);
 
       this._heartbeatInterval = setInterval(() => {
         if (this._socket?.OPEN) {
@@ -302,7 +302,7 @@ export default class GPortalSocket {
     }
   }
 
-  private authenticate(resubsctibe: boolean) {
+  private authenticate(resubscribe: boolean) {
     const token = this._auth.accessToken;
     if (!token) {
       throw new Error("No access token available");
@@ -320,7 +320,7 @@ export default class GPortalSocket {
         })
       );
 
-      if (resubsctibe) {
+      if (resubscribe) {
         this._manager.servers
           .getAll()
           .forEach((server) => this.addServer(server));

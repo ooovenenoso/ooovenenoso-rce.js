@@ -264,7 +264,7 @@ class ConsoleMessagesHandler {
                     server,
                     id: parseInt(teamPromotedMatch[3]),
                     oldOwner: teamPromotedMatch[1],
-                    newOwner: teamCreateMatch[2],
+                    newOwner: teamPromotedMatch[2],
                 });
             }
             // EVENT: KIT_SPAWN
