@@ -5,8 +5,11 @@ export default class Helper {
     oldList: string[],
     newList: string[]
   ): { joined: string[]; left: string[] } {
-    const joined = newList.filter((ign) => !oldList.includes(ign));
-    const left = oldList.filter((ign) => !newList.includes(ign));
+    const oldSet = new Set(oldList);
+    const newSet = new Set(newList);
+
+    const joined = newList.filter((ign) => !oldSet.has(ign));
+    const left = oldList.filter((ign) => !newSet.has(ign));
 
     return { joined, left };
   }
