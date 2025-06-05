@@ -85,8 +85,11 @@ export default class RCEManager {
     this.logger =
       logger?.instance || new RCELogger(logger?.level, logger?.file);
 
+    const username = auth?.username || process.env.RCE_USERNAME || "";
+    const password = auth?.password || process.env.RCE_PASSWORD || "";
+
     this._auth = new GPortalAuth(this);
-    await this._auth.login(auth.username, auth.password);
+    await this._auth.login(username, password);
 
     this._socket = new GPortalSocket(this, this._auth);
     this._socket.connect();

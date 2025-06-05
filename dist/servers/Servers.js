@@ -856,7 +856,7 @@ class ServerManager {
     async fetchStatus(identifier, sid, region) {
         const token = this._auth?.accessToken;
         if (!token) {
-            console.error(`[${identifier}] Failed To Fetch Server Status: No Access Token`);
+            ServerUtils_1.default.error(this._manager, `[${identifier}] Failed To Fetch Server Status: No Access Token`);
             return null;
         }
         this._manager.logger.debug(`[${identifier}] Fetching Server Status`);

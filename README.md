@@ -28,10 +28,12 @@ npm i b1nzeex/rce.js
 
 ```bash
 npm install
-npx tsc
+npm run build
 ```
 
 The compiled files are generated in the `dist` directory.
+
+You can also provide credentials via the `RCE_USERNAME` and `RCE_PASSWORD` environment variables.
 
 ## Example Usage - TypeScript
 
@@ -40,6 +42,8 @@ import { RCEManager, LogLevel, RCEEvent, RCEIntent } from "rce.js";
 
 const rce = new RCEManager();
 await rce.init({ username: "", password: "" }, { level: LogLevel.Info });
+
+// Alternatively set RCE_USERNAME and RCE_PASSWORD
 
 await rce.servers.addMany([
   {

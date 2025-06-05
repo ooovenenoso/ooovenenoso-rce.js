@@ -1131,7 +1131,8 @@ export default class ServerManager {
   ) {
     const token = this._auth?.accessToken;
     if (!token) {
-      console.error(
+      ServerUtils.error(
+        this._manager,
         `[${identifier}] Failed To Fetch Server Status: No Access Token`
       );
       return null;

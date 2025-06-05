@@ -10,7 +10,7 @@ export default class GPortalSocket {
     private _requests;
     constructor(manager: RCEManager, auth: GPortalAuth);
     close(): void;
-    connect(resubsctibe?: boolean): void;
+    connect(resubscribe?: boolean): void;
     removeServer(server: RustServer): void;
     addServer(server: RustServer): void;
     private authenticate;
