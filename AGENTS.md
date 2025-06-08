@@ -36,6 +36,8 @@ When creating a pull request, summarize the major changes in a "Summary" section
 #### Authentication
 After creating an instance of `RCEManager`, call `init()` to authenticate with G-PORTAL. Your credentials are only used locally to obtain tokens.
 
+**TypeScript**
+
 ```ts
 import { RCEManager, LogLevel } from "rce.js";
 
@@ -48,6 +50,8 @@ await rce.init({
   file: "rce.log"
 });
 ```
+
+**JavaScript**
 
 ```js
 const { RCEManager, LogLevel } = require("rce.js");
@@ -65,6 +69,8 @@ await rce.init({
 #### Logger
 RCE.JS includes a configurable logger. Available levels are `None`, `Info`, `Warn`, `Error` and `Debug` (default is `Info`). You can also specify a `logFile` to log everything to a file.
 
+**TypeScript**
+
 ```ts
 import { RCEManager, LogLevel } from "rce.js";
 
@@ -76,6 +82,8 @@ await rce.init({
   logFile: "rce.log"
 });
 ```
+
+**JavaScript**
 
 ```js
 const { RCEManager, LogLevel } = require("rce.js");
@@ -90,6 +98,8 @@ await rce.init({
 ```
 
 A custom logger can be created in TypeScript by implementing the `ILogger` interface:
+
+**TypeScript**
 
 ```ts
 import { ILogger, LogLevel } from "rce.js";
@@ -134,6 +144,8 @@ export default class MyCustomLogger implements ILogger {
 
 Use it like so:
 
+**TypeScript**
+
 ```ts
 import { RCEManager, LogLevel } from "rce.js";
 import MyCustomLogger from "./logger";
@@ -148,6 +160,8 @@ await rce.init({
 
 #### Adding Servers
 Use `addMany()` to add multiple servers or `add()` for one at a time.
+
+**TypeScript**
 
 ```ts
 import { RCEManager, RCEIntent } from "rce.js";
@@ -176,6 +190,8 @@ await rce.servers.addMany([
   }
 ]);
 ```
+
+**JavaScript**
 
 ```js
 const { RCEManager, RCEIntent } = require("rce.js");
@@ -206,6 +222,8 @@ await rce.servers.addMany([
 
 To add a single server:
 
+**TypeScript**
+
 ```ts
 await rce.servers.add({
   identifier: "solo-only-3x",
@@ -215,6 +233,8 @@ await rce.servers.add({
   state: ["solo", "3x"]
 });
 ```
+
+**JavaScript**
 
 ```js
 await rce.servers.add({
@@ -239,6 +259,8 @@ Server option fields:
 
 #### Removing Servers
 
+**TypeScript**
+
 ```ts
 import { RCEManager } from "rce.js";
 
@@ -247,6 +269,8 @@ await rce.init({ /* auth options */ }, { /* logger options */ });
 
 rce.servers.remove("solo-only-2x");
 ```
+
+**JavaScript**
 
 ```js
 const { RCEManager } = require("rce.js");
@@ -260,6 +284,8 @@ rce.servers.remove("solo-only-2x");
 #### Fetching Servers
 Retrieve all servers or filter by region.
 
+**TypeScript**
+
 ```ts
 import { RCEManager } from "rce.js";
 
@@ -270,6 +296,8 @@ const allServers = await rce.servers.fetch();
 const usServers = await rce.servers.fetch("US");
 const euServers = await rce.servers.fetch("EU");
 ```
+
+**JavaScript**
 
 ```js
 const { RCEManager } = require("rce.js");
@@ -294,6 +322,8 @@ npm install rce.js-datastore
 
 Use it with the manager:
 
+**TypeScript**
+
 ```ts
 import { RCEManager } from "rce.js";
 import DatabasePlugin from "rce.js-datastore";
@@ -306,6 +336,8 @@ rce.registerPlugin("database", new DatabasePlugin());
 await rce.database.connect();
 console.log(await rce.database.get("testKey", "defaultValue"));
 ```
+
+**JavaScript**
 
 ```js
 const { RCEManager } = require("rce.js");
@@ -330,6 +362,8 @@ npm install rce.js
 
 Example structure:
 
+**TypeScript**
+
 ```ts
 import type { RCEManager } from "rce.js";
 
@@ -351,6 +385,8 @@ export class ExamplePlugin {
 
 Usage:
 
+**TypeScript**
+
 ```ts
 import { RCEManager } from "rce.js";
 import ExamplePlugin from "rce.js-example";
@@ -361,6 +397,8 @@ await rce.init({ /* AuthOptions */ }, { /* LoggerOptions */ });
 rce.registerPlugin("example", new ExamplePlugin());
 rce.example.test(); // Logs: This is a test log!
 ```
+
+**JavaScript**
 
 ```js
 const { RCEManager } = require("rce.js");
