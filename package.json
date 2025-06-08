@@ -21,7 +21,7 @@
   ],
   "author": "b1nzee / b1nzeee / b1nzeex",
   "license": "ISC",
-  "description": "A wrapper for Rust Console Edition (RCE) that allows you to use the websocket and API from G-Portal.",
+  "description": "Personal fork of rce.js for experimenting with the G-Portal API and WebSocket features.",
   "devDependencies": {
     "@types/node": "^20.14.14",
     "@types/ws": "^8.5.11"

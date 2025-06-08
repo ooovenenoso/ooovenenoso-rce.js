@@ -1,4 +1,4 @@
-# rce.js
+# @ooovenenoso/rce.js
 
 `rce.js` is a TypeScript library that exposes a simple interface for controlling and monitoring **Rust Console Edition** servers hosted on **GPORTAL**. It wraps the official HTTP and WebSocket APIs so external tools can automate server administration and react to in‑game events.
 
