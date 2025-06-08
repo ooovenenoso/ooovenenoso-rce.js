@@ -5,6 +5,8 @@
 
 This repository is a personal fork of [b1nzeex/rce.js](https://github.com/b1nzeex/rce.js) for experiments and improvements according to my own criteria. All credit goes to the original project.
 
+The fork lives at [ooovenenoso/rce.js](https://github.com/ooovenenoso/rce.js) and is published on NPM as [@ooovenenoso/rce.js](https://www.npmjs.com/package/@ooovenenoso/rce.js).
+
 ## Features
 
 - Login and token management via the GPORTAL authentication API.
