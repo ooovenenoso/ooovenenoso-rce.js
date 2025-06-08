@@ -1,6 +1,11 @@
-# rce.js
+# @ooovenenoso/rce.js
 
 `rce.js` is a TypeScript library that exposes a simple interface for controlling and monitoring **Rust Console Edition** servers hosted on **GPORTAL**. It wraps the official HTTP and WebSocket APIs so external tools can automate server administration and react to in‑game events.
+
+
+This repository is a personal fork of [b1nzeex/rce.js](https://github.com/b1nzeex/rce.js) for experiments and improvements according to my own criteria. All credit goes to the original project.
+
+The fork lives at [ooovenenoso/rce.js](https://github.com/ooovenenoso/rce.js) and is published on NPM as [@ooovenenoso/rce.js](https://www.npmjs.com/package/@ooovenenoso/rce.js).
 
 ## Features
 
@@ -19,7 +24,7 @@
 ## Installation
 
 ```bash
-npm i b1nzeex/rce.js
+npm i @ooovenenoso/rce.js
 ```
 
 ## Building from Source
@@ -34,7 +39,7 @@ The compiled files are written to the `dist` directory. Credentials may also be 
 ## Quick Example
 
 ```typescript
-import { RCEManager, RCEEvent, RCEIntent, LogLevel } from "rce.js";
+import { RCEManager, RCEEvent, RCEIntent, LogLevel } from "@ooovenenoso/rce.js";
 
 const rce = new RCEManager();
 await rce.init({ username: "", password: "" }, { level: LogLevel.Info });
