@@ -18,7 +18,7 @@ The fork lives at [ooovenenoso/rce.js](https://github.com/ooovenenoso/rce.js) an
 
 ## Requirements
 
-- Node.js **16** or newer.
+- Node.js **18** or newer.
 - Access to a Rust Console Edition server hosted on GPORTAL.
 
 ## Installation
