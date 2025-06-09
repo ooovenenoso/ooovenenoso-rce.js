@@ -647,12 +647,9 @@ export default class ServerManager {
   private async updateBroadcasters(identifier) {
     const server = this.get(identifier);
     if (!server) {
-      if (!server.silent) {
-        this._manager.logger.warn(
-          `[${identifier}] Failed To Update Broadcasters: Invalid Server`
-        );
-      }
-
+      this._manager.logger.warn(
+        `[${identifier}] Failed To Update Broadcasters: Invalid Server`
+      );
       return;
     }
 
@@ -736,12 +733,9 @@ export default class ServerManager {
   private async fetchGibs(identifier: string) {
     const server = this.get(identifier);
     if (!server) {
-      if (!server.silent) {
-        this._manager.logger.warn(
-          `[${identifier}] Failed To Fetch Gibs: Invalid Server`
-        );
-      }
-
+      this._manager.logger.warn(
+        `[${identifier}] Failed To Fetch Gibs: Invalid Server`
+      );
       return;
     }
 
@@ -818,12 +812,9 @@ export default class ServerManager {
   private async updatePlayers(identifier: string) {
     const server = this.get(identifier);
     if (!server) {
-      if (!server.silent) {
-        this._manager.logger.warn(
-          `[${identifier}] Failed To Update Players: Invalid Server`
-        );
-      }
-
+      this._manager.logger.warn(
+        `[${identifier}] Failed To Update Players: Invalid Server`
+      );
       return;
     }
 
