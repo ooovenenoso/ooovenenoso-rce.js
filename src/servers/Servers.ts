@@ -11,6 +11,7 @@ import type {
   RustServerAdvancedInformation,
 } from "./interfaces";
 import ServerUtils from "../util/ServerUtils";
+import fetchWithRetry from "../util/fetchWithRetry";
 import CommandHandler from "./CommandHandler";
 import Helper from "../helper";
 
@@ -483,6 +484,7 @@ export default class ServerManager {
    * @param command - The command to send
    * @param response - Whether to wait for a response
    * @returns {Promise<CommandResponse>} - The command response
+   * @remarks Requests are retried when transient HTTP errors occur.
    *
    * @example
    * ```js
@@ -549,7 +551,7 @@ export default class ServerManager {
         });
 
         try {
-          const response = await fetch(GPortalRoutes.Api, {
+          const response = await fetchWithRetry(GPortalRoutes.Api, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -573,15 +575,16 @@ export default class ServerManager {
 
           const data = await response.json();
           if (!data?.data?.sendConsoleMessage?.ok) {
+            const detail = data?.errors?.[0]?.message ?? "AioRpcError";
             ServerUtils.error(
               this._manager,
-              "Failed To Send Command: AioRpcError",
+              `Failed To Send Command: ${detail}`,
               server
             );
             CommandHandler.remove(CommandHandler.get(identifier, command));
             resolve({
               ok: false,
-              error: "AioRpcError",
+              error: detail,
             });
           }
 
@@ -605,7 +608,7 @@ export default class ServerManager {
       });
     } else {
       try {
-        const response = await fetch(GPortalRoutes.Api, {
+        const response = await fetchWithRetry(GPortalRoutes.Api, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -614,15 +617,17 @@ export default class ServerManager {
           body: JSON.stringify(payload),
         });
 
-        if (!response.ok) {
+        const data = await response.json();
+        if (!response.ok || !data?.data?.sendConsoleMessage?.ok) {
+          const detail = data?.errors?.[0]?.message ?? `HTTP ${response.status} ${response.statusText}`;
           ServerUtils.error(
             this._manager,
-            `Failed To Send Command: HTTP ${response.status} ${response.statusText}`,
+            `Failed To Send Command: ${detail}`,
             server
           );
           return {
             ok: false,
-            error: `HTTP ${response.status} ${response.statusText}`,
+            error: detail,
           };
         }
 
@@ -998,7 +1003,7 @@ export default class ServerManager {
     }
 
     try {
-      const response = await fetch(GPortalRoutes.Api, {
+      const response = await fetchWithRetry(GPortalRoutes.Api, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1016,17 +1021,10 @@ export default class ServerManager {
         }),
       });
 
-      if (!response.ok) {
-        ServerUtils.error(
-          this._manager,
-          `Failed To Stop Server: HTTP ${response.status} ${response.statusText}`
-        );
-        return false;
-      }
-
       const data = await response.json();
-      if (!data?.data?.stopService?.ok) {
-        ServerUtils.error(this._manager, `Failed To Stop Server: AioRpcError`);
+      if (!response.ok || !data?.data?.stopService?.ok) {
+        const detail = data?.errors?.[0]?.message ?? `HTTP ${response.status} ${response.statusText}`;
+        ServerUtils.error(this._manager, `Failed To Stop Server: ${detail}`);
         return false;
       }
 
@@ -1072,13 +1070,13 @@ export default class ServerManager {
       return false;
     }
 
-    try {
-      const response = await fetch(GPortalRoutes.Api, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+      try {
+        const response = await fetchWithRetry(GPortalRoutes.Api, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         body: JSON.stringify({
           operationName: "restartService",
           variables: {
@@ -1090,19 +1088,12 @@ export default class ServerManager {
         }),
       });
 
-      if (!response.ok) {
-        ServerUtils.error(
-          this._manager,
-          `Failed To Start Server: HTTP ${response.status} ${response.statusText}`
-        );
-        return false;
-      }
-
-      const data = await response.json();
-      if (!data?.data?.restartService?.cfgContext) {
-        ServerUtils.error(this._manager, `Failed To Start Server: AioRpcError`);
-        return false;
-      }
+        const data = await response.json();
+        if (!response.ok || !data?.data?.restartService?.cfgContext) {
+          const detail = data?.errors?.[0]?.message ?? `HTTP ${response.status} ${response.statusText}`;
+          ServerUtils.error(this._manager, `Failed To Start Server: ${detail}`);
+          return false;
+        }
 
       this._manager.logger.debug(`[${identifier}] Server Starting`);
       return true;
