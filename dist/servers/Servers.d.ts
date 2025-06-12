@@ -155,6 +155,7 @@ export default class ServerManager {
      * @param command - The command to send
      * @param response - Whether to wait for a response
      * @returns {Promise<CommandResponse>} - The command response
+     * @remarks Requests are retried when transient HTTP errors occur.
      *
      * @example
      * ```js

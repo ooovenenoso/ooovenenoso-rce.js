@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants_1 = require("../constants");
 const ServerUtils_1 = __importDefault(require("../util/ServerUtils"));
+const fetchWithRetry_1 = __importDefault(require("../util/fetchWithRetry"));
 const CommandHandler_1 = __importDefault(require("./CommandHandler"));
 const helper_1 = __importDefault(require("../helper"));
 class ServerManager {
@@ -381,6 +382,7 @@ class ServerManager {
      * @param command - The command to send
      * @param response - Whether to wait for a response
      * @returns {Promise<CommandResponse>} - The command response
+     * @remarks Requests are retried when transient HTTP errors occur.
      *
      * @example
      * ```js
@@ -428,7 +430,7 @@ class ServerManager {
                     reject,
                 });
                 try {
-                    const response = await fetch(constants_1.GPortalRoutes.Api, {
+                    const response = await (0, fetchWithRetry_1.default)(constants_1.GPortalRoutes.Api, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -475,7 +477,7 @@ class ServerManager {
         }
         else {
             try {
-                const response = await fetch(constants_1.GPortalRoutes.Api, {
+                const response = await (0, fetchWithRetry_1.default)(constants_1.GPortalRoutes.Api, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
