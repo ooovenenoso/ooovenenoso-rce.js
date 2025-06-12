@@ -11,6 +11,7 @@ import type {
   RustServerAdvancedInformation,
 } from "./interfaces";
 import ServerUtils from "../util/ServerUtils";
+import fetchWithRetry from "../util/fetchWithRetry";
 import CommandHandler from "./CommandHandler";
 import Helper from "../helper";
 
@@ -483,6 +484,7 @@ export default class ServerManager {
    * @param command - The command to send
    * @param response - Whether to wait for a response
    * @returns {Promise<CommandResponse>} - The command response
+   * @remarks Requests are retried when transient HTTP errors occur.
    *
    * @example
    * ```js
@@ -549,7 +551,7 @@ export default class ServerManager {
         });
 
         try {
-          const response = await fetch(GPortalRoutes.Api, {
+          const response = await fetchWithRetry(GPortalRoutes.Api, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -605,7 +607,7 @@ export default class ServerManager {
       });
     } else {
       try {
-        const response = await fetch(GPortalRoutes.Api, {
+        const response = await fetchWithRetry(GPortalRoutes.Api, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
